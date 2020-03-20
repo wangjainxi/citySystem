@@ -39,25 +39,27 @@ import nestedRouter from './modules/nested'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  // {
+  //   path: '/redirect',
+  //   component: Layout,
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: '/redirect/:path(.*)',
+  //       component: () => import('@/views/redirect/index')
+  //     }
+  //   ]
+  // },
   {
-    path: '/redirect',
+    path: '/insManagement',
     component: Layout,
-    hidden: true,
+    redirect: '/insManagement/index',
     children: [
       {
-        path: '/redirect/:path(.*)',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
-  },
-  {
-    path: '/problem',
-    component: Layout,
-
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/problem/index')
+        path: 'index',
+        component: () => import('@/views/InsManagement/index'),
+        name: 'problem',
+        meta: { title: 'problem', icon: 'guide', noCache: true }
       }
     ]
   },
