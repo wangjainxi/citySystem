@@ -77,6 +77,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/usermanagement',
+    component: Layout,
+    // redirect: '/rolemanagement/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/usermanagement/index'),
+        name: 'usermanagement',
+        meta: { title: '用户管理', icon: 'guide', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true

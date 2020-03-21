@@ -351,6 +351,7 @@ export default {
   background-color: #bdddff;
   span {
     flex: 1;
+
   }
   &-btn {
     padding-right: 20px;
