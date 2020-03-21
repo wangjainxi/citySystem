@@ -59,7 +59,20 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/InsManagement/index'),
         name: 'problem',
-        meta: { title: 'problem', icon: 'guide', noCache: true }
+        meta: { title: 'InsManagement', icon: 'guide', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/rolemanagement',
+    component: Layout,
+    // redirect: '/rolemanagement/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/rolemanagement/index'),
+        name: 'rolemanagement',
+        meta: { title: 'RoleManagement', icon: 'guide', noCache: true }
       }
     ]
   },

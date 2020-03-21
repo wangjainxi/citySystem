@@ -78,7 +78,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="上级单位">
-          <div type="text" class="higthlevel" @click="selectHigthLevel" />
+          <div type="text" style="text-align:center;" class="higthlevel" @click="selectHigthLevel">{{ temp.higthlevel }}</div>
         </el-form-item>
         <el-form-item label="联系电话" prop="tel">
           <el-input v-model="temp.tel" />
@@ -123,7 +123,7 @@
       />
       <el-button>查询</el-button>
       <!-- 组织机构菜单 -->
-      <el-menu
+      <!-- <el-menu
         default-active="1-3"
         class="el-menu-vertical-demo insMenu"
         open="1-3-1"
@@ -156,10 +156,11 @@
             </template>
           </el-submenu>
         </el-submenu>
-      </el-menu>
+      </el-menu>-->
+      <el-tree :data="OrganizationalChart" :props="defaultProps" @node-click="handleNodeClick" />
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelInstitution">取消</el-button>
-        <el-button type="primary" @click="addInstitution">确定</el-button>
+        <!-- <el-button @click="dialogHigthLevelSelect= false">取消</el-button> -->
+        <el-button type="primary" @click="dialogHigthLevelSelect= false">确定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -233,38 +234,46 @@ export default {
         fax: '010-486732',
         network: '',
         political: '',
-        remark: ''
+        remark: '',
+        higthlevel: ''
       },
       // 组织机构数据
-      OrganizationalChart: {
-        name: '组织机构',
-        index: '1',
-        children: [
-          { name: '忻州经济技术建设环境保护...', children: '', index: '1-1' },
-          { name: '忻州经济技术环卫队...', children: '', index: '1-2' },
-          {
-            index: '1-3',
-            name: '忻州经济技术综合监察大队、开发区...',
-            children: [
-              { name: '孩子1', index: '1-3-1' },
-              { name: '孩子2', index: '1-3-2' }
-            ]
-          },
-          { name: '市建设局总办', children: '', index: '1-4' },
-          { name: '建管科', children: '', index: '1-5' },
-          {
-            name: '安全站',
-            index: '1-6',
-            children: [
-              { name: '孩子1', index: '1-6-1' },
-              { name: '孩子2', index: '1-6-2' }
-            ]
-          },
-          { name: '招标局', children: '', index: '1-7' },
-          { name: '工程质量监督站...', children: '', index: '1-8' },
-          { name: '市城建监察支队', children: '', index: '1-9' },
-          { name: '市人民公园', children: '', index: '1-10' }
-        ]
+      OrganizationalChart: [
+        {
+          name: '组织机构',
+          index: '1',
+          children: [
+            { name: '忻州经济技术建设环境保护...', children: '', index: '1-1' },
+            { name: '忻州经济技术环卫队...', children: '', index: '1-2' },
+            {
+              index: '1-3',
+              name: '忻州经济技术综合监察大队、开发区...',
+              children: [
+                { name: '孩子1', index: '1-3-1' },
+                { name: '孩子2', index: '1-3-2' }
+              ]
+            },
+            { name: '市建设局总办', children: '', index: '1-4' },
+            { name: '建管科', children: '', index: '1-5' },
+            {
+              name: '安全站',
+              index: '1-6',
+              children: [
+                { name: '孩子1', index: '1-6-1' },
+                { name: '孩子2', index: '1-6-2' }
+              ]
+            },
+            { name: '招标局', children: '', index: '1-7' },
+            { name: '工程质量监督站...', children: '', index: '1-8' },
+            { name: '市城建监察支队', children: '', index: '1-9' },
+            { name: '市人民公园', children: '', index: '1-10' }
+          ]
+        }
+      ],
+      // 属性
+      defaultProps: {
+        children: 'children',
+        label: 'name'
       },
       // 搜索上级单位关键字
       searchHigthLevel: '上级单位关键字',
@@ -300,7 +309,8 @@ export default {
         fax: '010-486732',
         network: '',
         political: '',
-        remark: ''
+        remark: '',
+        higthlevel: ''
       }
     },
     // 点击选择上级单位
@@ -308,20 +318,23 @@ export default {
       this.dialogHigthLevelSelect = true
     },
     // 上级单选菜单激活的回调
-    selectMenu(index) {
-      // alert(index)
-      console.log(index)
-      if (index) this.activeIndex = index
-    },
-    openMenu(index) {
-      // alert(index)
-      console.log(index)
-      if (index) this.activeIndex = index
+    // selectMenu(index) {
+    //   // alert(index)
+    //   console.log(index)
+    //   if (index) this.activeIndex = index
+    // },
+    // openMenu(index) {
+    //   // alert(index)
+    //   console.log(index)
+    //   if (index) this.activeIndex = index
+    // }
+    handleNodeClick(data) {
+      // console.log(data)
+
+      this.temp.higthlevel = data.name
     }
   }
-
 }
-
 </script>
 <style lang="scss" scoped>
 .ins-container {
@@ -362,7 +375,7 @@ export default {
 .higthlevel {
   background-color: #ebebeb;
   border: 1px solid #eee;
-  width: 330px;
+  width: 320px;
   height: 36px;
   border-radius: 4px;
 }
@@ -370,7 +383,7 @@ export default {
 .el-submenu {
   padding-left: 40px;
 }
-.blue{
+.blue {
   background-color: #e8f4ff;
 }
 </style>
