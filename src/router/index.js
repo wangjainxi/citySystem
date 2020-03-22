@@ -59,7 +59,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/InsManagement/index'),
         name: 'problem',
-        meta: { title: 'InsManagement', icon: 'guide', noCache: true }
+        meta: { title: '机构管理', icon: 'guide', noCache: true }
       }
     ]
   },
@@ -72,7 +72,7 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/rolemanagement/index'),
         name: 'rolemanagement',
-        meta: { title: 'RoleManagement', icon: 'guide', noCache: true }
+        meta: { title: '角色管理', icon: 'guide', noCache: true }
       }
     ]
   },
@@ -86,6 +86,32 @@ export const constantRoutes = [
         component: () => import('@/views/usermanagement/index'),
         name: 'usermanagement',
         meta: { title: '用户管理', icon: 'guide', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/peoplemanagement',
+    component: Layout,
+    // redirect: '/rolemanagement/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/PeopleManagement/index'),
+        name: 'peoplemanagement',
+        meta: { title: '人员管理', icon: 'guide', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/menumanagement',
+    component: Layout,
+    // redirect: '/rolemanagement/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/MenuManagement/index'),
+        name: 'menumanagement',
+        meta: { title: '菜单管理', icon: 'guide', noCache: true }
       }
     ]
   },
