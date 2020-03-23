@@ -116,6 +116,29 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/workflow',
+    component: Layout,
+    // redirect: '/rolemanagement/index',
+
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/WorkFlow/index'),
+        name: 'workflow',
+        meta: { title: '工作流定义', icon: 'guide', noCache: true }
+      },
+      {
+        path: 'design',
+        component: () => import('@/views/WorkFlow/Design'),
+        name: 'Design',
+        meta: { title: 'Design', noCache: true, activeMenu: '工作流定义' },
+        hidden: true
+      }
+
+    ]
+  },
+
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true

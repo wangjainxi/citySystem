@@ -6,7 +6,7 @@
     <span />
     <div class="table-header-btn">
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" @click="addEvent">添加</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary">删除</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" @click="deleteEvent">删除</el-button>
     </div>
   </div>
 </template>
@@ -17,6 +17,9 @@ export default {
   methods: {
     addEvent() {
       this.$emit('addEvent')
+    },
+    deleteEvent() {
+      this.$emit('deleteEvent')
     }
   }
 }

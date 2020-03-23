@@ -219,7 +219,7 @@ export default {
       // alert('用户新增')
       this.temp = {
         name: item.name,
-        sort: '',
+        sort: index + 1,
         menulink: item.menulink,
         imglink: item.imglink,
         father: item.father
