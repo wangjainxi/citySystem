@@ -137,6 +137,28 @@ export const constantRoutes = [
 
     ]
   },
+  {
+    path: '/notice',
+    component: Layout,
+    redirect: '/notice/index',
+    meta: { title: '公告', icon: 'guide', noCache: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/Notice/index'),
+        name: 'workflow',
+        meta: { title: '公告管理', icon: 'guide', noCache: true }
+      },
+      {
+        path: 'inform ',
+        component: () => import('@/views/Notice/Inform'),
+        name: 'Design',
+        meta: { title: '公告通知', icon: 'guide', noCache: true }
+
+      }
+
+    ]
+  },
 
   {
     path: '/login',
