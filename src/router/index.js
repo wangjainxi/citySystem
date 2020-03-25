@@ -159,6 +159,19 @@ export const constantRoutes = [
 
     ]
   },
+  {
+    path: '/casetype',
+    component: Layout,
+    // redirect: '/rolemanagement/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/CaseType/index'),
+        name: 'casetype',
+        meta: { title: '案件管理', icon: 'guide', noCache: true }
+      }
+    ]
+  },
 
   {
     path: '/login',

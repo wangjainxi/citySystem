@@ -29,6 +29,8 @@ import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
  */
 // 使用自己的插件
 import plugin from '@/plugin'
+import { VueContext } from 'vue-context'
+Vue.use(VueContext)
 Vue.use(plugin)
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
