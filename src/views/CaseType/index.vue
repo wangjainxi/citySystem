@@ -21,7 +21,6 @@
         <i v-if="data.children && data.children.length>0" class="el-icon-folder-opened" />
         <i v-else class="el-icon-document" />
         <span>{{ node.label }}</span>
-        <span>{{ node.$index }}</span>
       </span>
     </el-tree>
     <!-- 右击显示的vue-content -->
@@ -32,7 +31,7 @@
           <a @click.prevent="add(child.data)">新建</a>
         </li>
         <li>
-          <a @click.prevent="remove(child.data)">Delete "{{ child.data.name }}"</a>
+          <a @click.prevent="remove(child.data)">删除 "{{ child.data.name }}"</a>
         </li>
         <li>
           <a @click.prevent="update(child.data)">修改 "{{ child.data.name }}"</a>
@@ -75,7 +74,7 @@ export default {
         { id: 1,
           label: '事件',
           children: [
-            { id: 2, label: '市容环境', children: [
+            { id: 40, label: '市容环境', children: [
               { id: 15, label: '市容环境1-1' },
               { id: 16, label: '市容环境1-2' },
               { id: 17, label: '市容环境1-3' }
@@ -132,7 +131,8 @@ export default {
       dialogStatus: '',
       textMap: {
         update: '修改案件类型',
-        create: '新增案件类型'
+        create: '新增案件类型',
+        remove: '删除案件类型'
       },
       // 表单数据
       temp: {
@@ -160,7 +160,11 @@ export default {
     },
 
     remove(data) {
-
+      this.selectDate = data
+      this.dialogStatus = 'remove'
+      const fatherindex = 0
+      const rank = 0
+      this.select(this.caseType, fatherindex, rank)
     },
     update(data) {
       this.dialogFormVisible = true
@@ -214,49 +218,124 @@ export default {
       rank++
       data.forEach((item, index) => {
         if (item.id === this.selectDate.id) {
+          console.log('this.selectDate.id', item.id)
+
           console.log(data, index, fatherindex, rank)
+          alert(1)
           this.fatherNode = data
           this.fatherNodeIndex = fatherindex
           this.NodeIndex = index
+          console.log('rank', rank)
 
-          if (rank === 1) {
-            this.$set(this.caseType, this.NodeIndex, { id: this.temp.code, label: this.temp.name, children: this.selectDate.children })
-          } else if (rank === 2) {
-            console.log(typeof (fatherindex))
+          // 删除
+          if (this.dialogStatus === 'remove') {
+            if (rank === 1) {
+              this.$confirm('此操作将删除该类所有案件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.caseType.splice(index, 1)
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
 
-            // console.log(this.caseType[])
-
-            this.$set(this.caseType[fatherindex].children, index, { id: this.temp.code, label: this.temp.name, children: this.selectDate.children })
-          } else if (rank === 3) {
-            // this.caseType[fatherindex].children[index]
-            console.log('这是data', data)
-            this.caseType.forEach((item, i) => {
-              console.log(item, i)
-
-              item.children.forEach((item) => {
-                if (item.children === data) {
-                  this.zindex = i
-                  console.log('这是最上层index', i)
-                  if (this.dialogStatus === 'update') {
-                    this.$set(this.caseType[i].children[fatherindex].children, index, { id: this.temp.code, label: this.temp.name, children: this.selectDate.children })
-                    return i
-                  } else {
-                    alert(1)
-                    this.caseType[i].children[fatherindex].children.push({ id: this.temp.code, label: this.temp.name, children: this.selectDate.children })
-                  }
-                }
+                })
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+                })
               })
-            })
+            } else if (rank === 2) {
+              this.$confirm('此操作将删除该类所有案件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                console.log('二层级', this.caseType[fatherindex])
+
+                this.caseType[fatherindex].children.splice(index, 1)
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+
+                })
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+                })
+              })
+            } else if (rank === 3) {
+              this.$confirm('此操作将删除该类所有案件, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                this.caseType.forEach((item, i) => {
+                  console.log(item, i)
+
+                  item.children.forEach((item) => {
+                    if (item.children === data) {
+                      this.zindex = i
+                      console.log('这是最上层index', i)
+                      this.caseType[i].children[fatherindex].children.splice(index, 1)
+                    }
+                  })
+                })
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+
+                })
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+                })
+              })
+            }
+          } else {
+            // 增改
+
+            if (rank === 1) {
+              this.$set(this.caseType, this.NodeIndex, { id: this.temp.code, label: this.temp.name, children: this.selectDate.children })
+            } else if (rank === 2) {
+              console.log(typeof (fatherindex))
+
+              // console.log(this.caseType[])
+
+              this.$set(this.caseType[fatherindex].children, index, { id: this.temp.code, label: this.temp.name, children: this.selectDate.children })
+            } else if (rank === 3) {
+            // this.caseType[fatherindex].children[index]
+              console.log('这是data', data)
+              this.caseType.forEach((item, i) => {
+                console.log(item, i)
+
+                item.children.forEach((item) => {
+                  if (item.children === data) {
+                    this.zindex = i
+                    console.log('这是最上层index', i)
+                    if (this.dialogStatus === 'update') {
+                      this.$set(this.caseType[i].children[fatherindex].children, index, { id: this.temp.code, label: this.temp.name, children: this.selectDate.children })
+                      return i
+                    } else {
+                      alert(1)
+                      this.caseType[i].children[fatherindex].children.push({ id: this.temp.code, label: this.temp.name, children: this.selectDate.children })
+                    }
+                  }
+                })
+              })
 
             // this.$set(this.caseType[zindex])
+            }
+            this.dialogFormVisible = false
+            this.temp = {
+              code: '',
+              name: ''
+            }
           }
-          this.dialogFormVisible = false
-
-          this.temp = {
-            code: '',
-            name: ''
-          }
-          return item
         } else {
           // console.log(item)
           if (item.children && item.children.length > 0) {

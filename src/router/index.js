@@ -172,6 +172,19 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/question',
+    component: Layout,
+    // redirect: '/rolemanagement/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/Question/index'),
+        name: 'question',
+        meta: { title: '问题来源管理', icon: 'guide', noCache: true }
+      }
+    ]
+  },
 
   {
     path: '/login',
