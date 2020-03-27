@@ -31,10 +31,10 @@
           <a @click.prevent="add(child.data)">新建</a>
         </li>
         <li>
-          <a @click.prevent="remove(child.data)">删除 "{{ child.data.name }}"</a>
+          <a @click.prevent="remove(child.data)">删除</a>
         </li>
         <li>
-          <a @click.prevent="update(child.data)">修改 "{{ child.data.name }}"</a>
+          <a @click.prevent="update(child.data)">修改</a>
         </li>
       </template>
     </vue-context>
